@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.BlockLocation;
@@ -426,4 +427,10 @@ public class HDFSClient {
 
 		System.out.println("Done!");
 	}
+	
+	protected URL getResource(String file) {
+		ClassLoader classLoader = getClass().getClassLoader();
+		return classLoader.getResource(file);
+	}
+
 }
