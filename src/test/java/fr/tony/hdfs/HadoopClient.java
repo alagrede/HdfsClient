@@ -1,4 +1,4 @@
-package com.tony.hdfs;
+package fr.tony.hdfs;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,8 +19,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.security.UserGroupInformation;
 
-
-public class HDFSClientKerberos {
+public class HadoopClient {
 
 	private URL krbConfUrl;
 	private String hadoopCluster;

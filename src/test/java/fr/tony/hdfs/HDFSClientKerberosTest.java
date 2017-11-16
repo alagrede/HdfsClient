@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
@@ -37,13 +38,18 @@ public class HDFSClientKerberosTest {
 		client.setHttpAaddress(prop.getProperty("hadoop.httpAddress"));
 		client.setRpcAddress(prop.getProperty("hadoop.rpcAddress"));
 		client.setHadoopProxy(prop.getProperty("hadoop.failoverProxy"));
-		client.setJaasConfUrl(prop.getProperty("hadoop.jaasConfUrl"));
-		client.setKrbConfUrl(prop.getProperty("hadoop.krb5Url"));
+		
+		URL jaas = classLoader.getResource(prop.getProperty("hadoop.jaasConfUrl"));
+		URL krb5 = classLoader.getResource(prop.getProperty("hadoop.krb5Url"));
+		client.setJaasConfUrl(jaas);
+		client.setKrbConfUrl(krb5);
 	}
 	
 	@Test
 	public void testLoginWithKeytab() throws NoSuchAlgorithmException, URISyntaxException, IOException {
-		FileSystem fs = client.hadoopConnectionWithKeytab("xxx.keytab", "xxx@xxx.CORP");
+		String keytabPath = getClass().getClassLoader().getResource("xxx.keytab").getPath();
+		
+		FileSystem fs = client.hadoopConnectionWithKeytab(keytabPath, "xxx@xxx.CORP");
 		list(fs);
 	}
 
